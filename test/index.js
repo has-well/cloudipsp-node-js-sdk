@@ -39,5 +39,15 @@ describe('Main API', function () {
         expect(data.token).to.not.be.empty
       })
     })
+    it('create verification url', async () => {
+      const dataCheckout = {
+        order_desc: 'order token',
+        currency: 'USD'
+      }
+      await fondy.Verification(dataCheckout).then(data => {
+        expect(data.response_status).assert('success')
+        expect(data.checkout_url).to.not.be.empty
+      })
+    })
   })
 })
