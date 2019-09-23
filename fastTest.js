@@ -1,6 +1,6 @@
 const CloudIpsp = require('./lib')
 
-const tt = new CloudIpsp(
+const fondy = new CloudIpsp(
   {
     protocol: '1.0',
     merchantId: 1396424,
@@ -15,4 +15,6 @@ const data = {
   currency: 'USD',
   amount: '125'
 }
-console.log(tt.Checkout(data))
+fondy.Checkout(data).then(data => {
+  console.log(data)
+})
