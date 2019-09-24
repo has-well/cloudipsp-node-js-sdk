@@ -24,7 +24,7 @@ describe('Main API', function () {
         amount: '1000'
       }
       await fondy.Checkout(dataCheckout).then(data => {
-        expect(data.response_status).assert('success')
+        expect(data.response_status).equal('success')
         expect(data.checkout_url).to.contain('api.fondy.eu')
       })
     })
@@ -35,18 +35,41 @@ describe('Main API', function () {
         amount: '1000'
       }
       await fondy.CheckoutToken(dataCheckout).then(data => {
-        expect(data.response_status).assert('success')
+        expect(data.response_status).equal('success')
         expect(data.token).to.not.be.empty
       })
     })
     it('create verification url', async () => {
-      const dataCheckout = {
+      const dataVerification = {
         order_desc: 'order token',
         currency: 'USD'
       }
-      await fondy.Verification(dataCheckout).then(data => {
-        expect(data.response_status).assert('success')
+      await fondy.Verification(dataVerification).then(data => {
+        expect(data.response_status).equal('success')
         expect(data.checkout_url).to.not.be.empty
+      })
+    })
+    it('capture order', async () => {
+      const dataApprovedOrder = {
+        order_desc: 'test order',
+        currency: 'USD',
+        amount: '1000',
+        card_number: '4444555511116666',
+        cvv2: '333',
+        expiry_date: '1232',
+        preauth: 'Y'
+      }
+      const orderId = await fondy.PciDssOne(dataApprovedOrder).then(data => {
+        return data.order_id
+      })
+      const captureData = {
+        currency: 'USD',
+        amount: '1000',
+        order_id: orderId
+      }
+      await fondy.Capture(captureData).then(dataC => {
+        expect(dataC.response_status).equal('success')
+        expect(dataC.capture_status).equal('captured')
       })
     })
   })
