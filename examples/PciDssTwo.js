@@ -8,7 +8,8 @@ const fondy = new CloudIpsp(
     secretKey: 'test'
   }
 )
-const data = {
+const dataS1 = {
+  order_id: Date.now(),
   order_desc: 'test order',
   currency: 'USD',
   amount: '1000',
@@ -16,8 +17,17 @@ const data = {
   cvv2: '222',
   expiry_date: '1232'
 }
-fondy.PciDssOne(data).then(data => {
+// After redirect get md && pares
+fondy.PciDssOne(dataS1).then(data => {
+  const dataStwo = {
+    order_id: dataS1.order_id,
+    md: '',
+    pares: ''
+  }
   console.log(data)
-}).catch((error) => {
-  console.log(error)
+  fondy.PciDssTwo(dataStwo).then(data => {
+    console.log(data)
+  }).catch((error) => {
+    console.log(error)
+  })
 })
