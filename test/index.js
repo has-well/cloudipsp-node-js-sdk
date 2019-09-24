@@ -16,7 +16,28 @@ const fondy = new CloudIpsp(
 )
 
 describe('Main API', function () {
+  this.timeout(15000)
   describe('API v1', function () {
+    it('create subscription url', async () => {
+      const date = new Date().toLocaleDateString()
+      const dataCheckout = {
+        order_desc: 'test order',
+        currency: 'USD',
+        amount: 1000,
+        recurring_data:
+          {
+            every: 5,
+            period: 'day',
+            amount: 1000,
+            start_time: date,
+            state: 'y',
+            Readonly: 'n'
+          }
+      }
+      await fondy.Subscription(dataCheckout).then(data => {
+        expect(data.checkout_url).to.contain('api.fondy.eu')
+      })
+    })
     it('create checkout url', async () => {
       const dataCheckout = {
         order_desc: 'order url',
@@ -24,7 +45,6 @@ describe('Main API', function () {
         amount: '1000'
       }
       await fondy.Checkout(dataCheckout).then(data => {
-        expect(data.response_status).equal('success')
         expect(data.checkout_url).to.contain('api.fondy.eu')
       })
     })
@@ -72,7 +92,6 @@ describe('Main API', function () {
         amount: '1000'
       }
       await fondy.CheckoutToken(dataCheckout).then(data => {
-        expect(data.response_status).equal('success')
         expect(data.token).to.not.be.empty
       })
     })
@@ -82,7 +101,6 @@ describe('Main API', function () {
         currency: 'USD'
       }
       await fondy.Verification(dataVerification).then(data => {
-        expect(data.response_status).equal('success')
         expect(data.checkout_url).to.not.be.empty
       })
     })
