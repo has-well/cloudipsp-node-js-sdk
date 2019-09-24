@@ -1,6 +1,6 @@
 {
   "name": "cloudipsp-node-js-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/index.js",
   "scripts": {
     "test": "mocha --timeout 15000 ./test"
