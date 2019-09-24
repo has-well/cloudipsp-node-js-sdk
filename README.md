@@ -25,7 +25,7 @@ node >= 7
 ```
 ## Simple Start
 ```javascript
-const CloudIpsp = require('@cloudipsp-node-js-sdk')
+const CloudIpsp = require('cloudipsp-node-js-sdk')
 
 const fondy = new CloudIpsp(
   {
