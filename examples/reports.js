@@ -5,7 +5,7 @@ const CloudIpsp = require('../lib')
 const fondy = new CloudIpsp(
   {
     merchantId: 1396424,
-    secretKey: 'test',
+    secretKey: 'test'
   }
 )
 const now = new Date()

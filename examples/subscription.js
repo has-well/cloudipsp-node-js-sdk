@@ -8,7 +8,7 @@ const fondy = new CloudIpsp(
     secretKey: 'test'
   }
 )
-const date = new Date().toLocaleDateString()
+const date = new Date().toISOString().slice(0, 10)
 
 const data = {
   order_desc: 'test order',
